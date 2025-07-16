@@ -1,0 +1,98 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Arial', sans-serif;
+}
+
+body {
+  display: flex;
+  height: 100vh;
+  margin: 0;
+  overflow: hidden;
+  animation: slideIn 0.6s ease-in-out;
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateX(-100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+.signup-left {
+  flex: 1;
+  background: url('assets/photo3.jpg') no-repeat center center/cover;
+}
+
+.signup-right {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #fff;
+}
+
+.signup-form-box {
+  width: 100%;
+  max-width: 400px;
+  padding: 40px;
+  box-shadow: 0 0 20px rgba(0,0,0,0.1);
+  border-radius: 10px;
+  text-align: center;
+}
+
+.signup-form-box h2 {
+  margin-bottom: 20px;
+  color: #333;
+}
+
+.signup-form-box input {
+  width: 100%;
+  padding: 12px;
+  margin: 10px 0;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  font-size: 1rem;
+}
+
+.signup-form-box button {
+  width: 100%;
+  padding: 12px;
+  background: #4caf50;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  margin-top: 10px;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+.extra-links {
+  margin-top: 20px;
+  font-size: 0.95rem;
+}
+
+.extra-links a {
+  color: #4caf50;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.extra-links a:hover,
+.back-link:hover {
+  text-decoration: underline;
+}
+
+.back-link {
+  display: block;
+  margin-top: 30px;
+  text-align: center;
+  color: #888;
+  text-decoration: none;
+  font-size: 0.9rem;
+}

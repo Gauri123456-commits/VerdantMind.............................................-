@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Green Streak | Verdant Minds</title>
+  <link rel="stylesheet" href="green-streak.css" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/@ffmpeg/ffmpeg@0.11.6/dist/ffmpeg.min.js"></script>
+</head>
+<body class="bg-green-50 text-gray-800">
+
+  <!-- Navbar -->
+  <nav class="bg-green-800 text-white p-4 flex justify-between">
+    <div class="font-bold text-xl flex items-center gap-2">
+      🌱 Verdant Minds
+    </div>
+    <div class="space-x-6">
+      <a href="community.html" class="hover:underline">Community Feed</a>
+      <a href="green-streak.html" class="hover:underline font-semibold underline">Green Streak</a>
+    </div>
+  </nav>
+
+  <!-- Main Section -->
+  <div class="max-w-3xl mx-auto mt-8 p-4">
+    <h1 class="text-2xl font-bold text-green-700 mb-4">Track Your Plant Growth</h1>
+
+    <div id="notification" class="bg-yellow-100 border-l-4 border-yellow-500 text-yellow-700 p-4 hidden mb-4">
+      🌼 You forgot to water me!
+    </div>
+
+    <!-- Upload Form -->
+    <form id="uploadForm" class="space-y-4 mb-6">
+      <input type="file" id="plantImage" accept="image/*" class="block w-full border p-2 rounded" required />
+      <button type="submit" class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700">Upload Today's Plant</button>
+    </form>
+
+    <!-- Progress -->
+    <div class="mb-6">
+      <div class="flex justify-between text-sm mb-1">
+        <span>Progress: <span id="progressText">0 / 10 Days</span></span>
+      </div>
+      <div class="w-full h-4 bg-gray-300 rounded">
+        <div id="progressBar" class="h-4 bg-green-600 rounded transition-all duration-500" style="width: 0%;"></div>
+      </div>
+    </div>
+
+    <!-- Gallery -->
+    <div id="galleryContainer" class="flex flex-wrap justify-center gap-2 mb-6"></div>
+
+    
+
+  <script type="module" src="green-streak.js"></script>
+</body>
+</html>

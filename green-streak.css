@@ -1,0 +1,33 @@
+/* green-streak.css */
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+#progressContainer {
+  margin-top: 1rem;
+  text-align: center;
+}
+
+#progressBar {
+  transition: width 0.5s ease-in-out;
+}
+
+#watchBtn {
+  transition: all 0.3s;
+}
+
+#watchBtn:hover {
+  background-color: #256d1b;
+}
+
+.hidden {
+  display: none;
+}
+
+input[type="file"] {
+  background-color: #fff;
+  border: 1px solid #ccc;
+  padding: 0.5rem;
+  border-radius: 0.25rem;
+  cursor: pointer;
+}

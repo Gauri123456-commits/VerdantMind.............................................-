@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Login - Verdant Minds</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    body {
+      display: flex;
+      height: 100vh;
+      margin: 0;
+      overflow: hidden;
+      animation: slideIn 0.6s ease-in-out;
+      font-family: Arial, sans-serif;
+    }
+
+    @keyframes slideIn {
+      from {
+        transform: translateX(-100%);
+        opacity: 0;
+      }
+      to {
+        transform: translateX(0);
+        opacity: 1;
+      }
+    }
+
+    @keyframes slideOut {
+      to {
+        transform: translateX(-100%);
+        opacity: 0;
+      }
+    }
+
+    body.slide-out {
+      animation: slideOut 0.5s forwards;
+    }
+
+    .login-left {
+      flex: 1;
+      background: url('assets/photo2.jpg') no-repeat center center/cover;
+    }
+
+    .login-right {
+      flex: 1;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background-color: #fff;
+    }
+
+    .login-form-box {
+      width: 100%;
+      max-width: 400px;
+      padding: 40px;
+      box-shadow: 0 0 20px rgba(0,0,0,0.1);
+      border-radius: 10px;
+      text-align: center;
+    }
+
+    .login-form-box h2 {
+      margin-bottom: 20px;
+    }
+
+    .login-form-box input {
+      width: 100%;
+      padding: 12px;
+      margin: 10px 0;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+    }
+
+    .login-form-box button {
+      width: 100%;
+      padding: 12px;
+      background: #4caf50;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      margin-top: 10px;
+      cursor: pointer;
+      font-size: 1rem;
+    }
+
+    .extra-links {
+      margin-top: 20px;
+      font-size: 0.95rem;
+    }
+
+    .extra-links a {
+      color: #4caf50;
+      text-decoration: none;
+      font-weight: 600;
+    }
+
+    .extra-links a:hover {
+      text-decoration: underline;
+    }
+
+    .back-link {
+      display: block;
+      margin-top: 30px;
+      text-align: center;
+      color: #888;
+      text-decoration: none;
+      font-size: 0.9rem;
+    }
+
+    .back-link:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+  <div class="login-left"></div>
+  <div class="login-right">
+    <div class="login-form-box">
+      <h2>Login</h2>
+      <form id="loginForm">
+        <input type="email" id="login-email" placeholder="Email" required />
+        <input type="password" id="login-password" placeholder="Password" required />
+        <button type="submit">Login</button>
+        <p id="login-error" style="color:red; margin-top: 10px;"></p>
+      </form>
+
+      <div class="extra-links">
+        Not registered?
+        <a href="signup.html">Sign up here</a>
+      </div>
+
+      <a href="index.html" class="back-link">← Back to Home</a>
+    </div>
+  </div>
+
+  <!-- Firebase App and Database Scripts -->
+  <script type="module">
+    import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js';
+    import { getDatabase, ref, onValue } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js';
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyAY6c_h30Ge5mQIBM6Qu0tcJNAWuaIfrgY",
+    authDomain: "verdantminds-26aa7.firebaseapp.com",
+    databaseURL: "https://verdantminds-26aa7-default-rtdb.firebaseio.com",
+    projectId: "verdantminds-26aa7",
+    storageBucket: "verdantminds-26aa7.firebasestorage.app",
+    messagingSenderId: "332964884712",
+    appId: "1:332964884712:web:eac7a0475b2bc53804195d",
+    measurementId: "G-ZRLX2JSYVZ"
+  };
+
+
+    const app = initializeApp(firebaseConfig);
+    const database = getDatabase(app);
+
+    document.getElementById('loginForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+
+      const email = document.getElementById("login-email").value.trim();
+      const password = document.getElementById("login-password").value.trim();
+      const errorElement = document.getElementById("login-error");
+
+      const usersRef = ref(database, 'users');
+
+      onValue(usersRef, (snapshot) => {
+        const users = snapshot.val();
+        let found = false;
+
+        for (const key in users) {
+          if (users[key].email === email && users[key].password === password) {
+            found = true;
+            break;
+          }
+        }
+
+        if (found) {
+          document.body.classList.add('slide-out');
+          setTimeout(() => {
+            window.location.href = 'home.html';
+          }, 500);
+        } else {
+          errorElement.textContent = "Incorrect email or password.";
+        }
+      }, {
+        onlyOnce: true
+      });
+    });
+  </script>
+</body>
+</html>

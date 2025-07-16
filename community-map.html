@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Community Map - Verdant Minds</title>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    #map {
+      height: 80vh;
+      width: 90%;
+      margin: 20px auto;
+      border: 2px solid #4CAF50;
+      border-radius: 8px;
+    }
+  </style>
+</head>
+<body class="bg-green-50 text-center">
+
+  <nav class="bg-green-800 text-white p-4 flex justify-between">
+    <div class="font-bold text-xl flex items-center gap-2">
+      <i class="fas fa-leaf"></i> Verdant Minds
+    </div>
+    <div class="space-x-6">
+      <a href="community.html" class="hover:underline">Community Feed</a>
+      <a href="community-map.html" class="hover:underline font-semibold underline">Community Map</a>
+    </div>
+  </nav>
+
+  <h1 class="text-2xl font-bold text-green-700 mt-6">🌍 Join the Verdant Map!</h1>
+
+  <form id="locationForm" class="mt-4 mb-6 space-x-2">
+    <input type="text" id="state" placeholder="State" class="p-2 border rounded" required />
+    <input type="text" id="country" placeholder="Country" class="p-2 border rounded" required />
+    <button type="submit" class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700">
+      Submit Location
+    </button>
+  </form>
+
+  <div id="map"></div>
+
+  <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+  <script type="module">
+    // Firebase setup
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+    import { getDatabase, ref, push, onValue } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyAY6c_h30Ge5mQIBM6Qu0tcJNAWuaIfrgY",
+      authDomain: "verdantminds-26aa7.firebaseapp.com",
+      databaseURL: "https://verdantminds-26aa7-default-rtdb.firebaseio.com",
+      projectId: "verdantminds-26aa7",
+      storageBucket: "verdantminds-26aa7.firebasestorage.app",
+      messagingSenderId: "332964884712",
+      appId: "1:332964884712:web:eac7a0475b2bc53804195d",
+      measurementId: "G-ZRLX2JSYVZ"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getDatabase(app);
+
+    // Map setup
+    const map = L.map('map').setView([20, 0], 2);
+    L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
+      attribution: '&copy; <a href="https://carto.com/">CARTO</a> | © OpenStreetMap contributors',
+      noWrap: true,
+      bounds: [[-85, -180], [85, 180]]
+    }).addTo(map);
+    map.setMaxBounds([[85, -180], [-85, 180]]); // Optional: restrict panning beyond edges
+
+    // Geocode and submit
+    document.getElementById('locationForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const state = document.getElementById('state').value;
+      const country = document.getElementById('country').value;
+      const location = `${state}, ${country}`;
+
+      const coords = await getCoordinates(location);
+      if (coords) {
+        push(ref(db, 'locations'), {
+          state,
+          country,
+          lat: coords.lat,
+          lng: coords.lng
+        });
+      } else {
+        alert("Could not find location. Try another.");
+      }
+    });
+
+    // Geocoding using OpenCage API
+    async function getCoordinates(location) {
+      const apiKey = "5337c48833e7412684f52c5d245c1421"; // Your OpenCage API key
+      const response = await fetch(`https://api.opencagedata.com/geocode/v1/json?q=${encodeURIComponent(location)}&key=${apiKey}`);
+      const data = await response.json();
+      if (data.results.length > 0) {
+        return data.results[0].geometry;
+      }
+      return null;
+    }
+
+    // Display all locations
+    onValue(ref(db, 'locations'), (snapshot) => {
+      const all = snapshot.val();
+      if (!all) return;
+      Object.values(all).forEach(loc => {
+        L.marker([loc.lat, loc.lng]).addTo(map)
+          .bindPopup(`<b>${loc.state}, ${loc.country}</b>`);
+      });
+    });
+  </script>
+
+</body>
+</html>

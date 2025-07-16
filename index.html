@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Verdant Minds</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- HERO SECTION -->
+  <section class="hero">
+    <img 
+      src="assets/image.jpg"
+      alt="Landing Background" 
+      class="background-image"
+    >
+
+    <div class="nav-container">
+      <a href="login.html" class="nav-item">Login</a>
+      <a href="signup.html" class="nav-item">Sign Up</a>
+    </div>
+
+    <div class="main-content">
+      <h1 class="main-title">
+        <span>V</span><span>e</span><span>r</span><span>d</span><span>a</span><span>n</span><span>t</span>
+        <span>M</span><span>i</span><span>n</span><span>d</span><span>s</span>
+        <span>.</span>
+      </h1>
+      <p class="tagline">
+        <span>B</span><span>r</span><span>i</span><span>n</span><span>g</span><span>i</span><span>n</span><span>g</span>
+        <span>i</span><span>n</span><span>t</span><span>e</span><span>l</span><span>l</span><span>i</span><span>g</span><span>e</span><span>n</span><span>c</span><span>e</span>
+        <span>t</span><span>o</span>
+        <span>p</span><span>l</span><span>a</span><span>n</span><span>t</span>
+        <span>c</span><span>a</span><span>r</span><span>e</span>
+        <span>-</span>
+        <span>a</span><span>u</span><span>t</span><span>o</span><span>m</span><span>a</span><span>t</span><span>i</span><span>c</span><span>a</span><span>l</span><span>l</span><span>y</span>
+      </p>
+    </div>
+  </section>
+
+  <!-- ABOUT US SECTION -->
+  <section class="about-us">
+    <video autoplay muted loop class="about-bg-video">
+      <source src="assets/about-bg.mp4" type="video/mp4" />
+      Your browser does not support the video tag.
+    </video>
+    <div class="about-overlay">
+      <div class="about-text-content">
+        <h2 class="about-title">About Us</h2>
+        <p class="about-text">
+          Verdant Minds simplifies plant care with smart automation and real-time monitoring.
+          Our system tracks soil moisture, and light to optimize plant health.
+          We’ve automated watering and alerts through an easy-to-use mobile app.
+          Recognized in tech competitions, our eco-friendly solution supports over 50 plant types.
+          We aim to make sustainable living easier—one plant at a time.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT SECTION -->
+  <section class="contact-section">
+    <div class="contact-overlay">
+      <div class="contact-container">
+        <h2>Contact Us</h2>
+        <p>Have questions? Reach us via email below.</p>
+        <form>
+          <input type="email" placeholder="Your Email" required />
+          <textarea placeholder="Your Message" rows="4" required></textarea>
+          <button type="submit">Send</button>
+        </form>
+      </div>
+    </div>
+  </section>
+  
+
+  <!-- JAVASCRIPT -->
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      // Animate main title and tagline
+      const titleSpans = document.querySelectorAll('.main-title span');
+      const taglineSpans = document.querySelectorAll('.tagline span');
+
+      titleSpans.forEach((span, index) => {
+        span.style.animationDelay = (index * 0.05 + 0.5) + 's';
+      });
+
+      taglineSpans.forEach((span, index) => {
+        span.style.animationDelay = (index * 0.03 + 2) + 's';
+      });
+
+      // Animate about section text on scroll
+      const aboutText = document.querySelector('.about-text-content');
+      const observer = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            aboutText.classList.add('visible');
+          }
+        });
+      }, {
+        threshold: 0.5
+      });
+
+      if (aboutText) observer.observe(aboutText);
+
+      // Animate contact form on scroll
+      const contactForm = document.querySelector('.contact-container');
+      const contactObserver = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            contactForm.classList.add('visible');
+          }
+        });
+      }, {
+        threshold: 0.4
+      });
+
+      if (contactForm) contactObserver.observe(contactForm);
+    });
+  </script>
+  
+</body>
+</html

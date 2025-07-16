@@ -1,0 +1,23 @@
+/* green-calendar.css */
+
+body {
+  scroll-behavior: smooth;
+  background-color: #e6f4ea; /* soft green background */
+}
+
+.calendar-embed iframe {
+  border-radius: 12px;
+  background-color: #d9fbe1;
+}
+
+.calendar-embed {
+  overflow: hidden;
+  border: 2px solid #4caf50;
+  border-radius: 14px;
+  box-shadow: 0 4px 12px rgba(0, 128, 0, 0.15);
+  transition: transform 0.3s ease;
+}
+
+.calendar-embed:hover {
+  transform: scale(1.01);
+}
